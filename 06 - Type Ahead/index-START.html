@@ -17,7 +17,24 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const cities = [];
+fetch(endpoint)
+  .then(blob => blob.json())
+  .then(data => cities.push(...data));
 
+  function test(){
+    console.log("etst")
+  }
+setTimeout(test,3000)
+
+function findMatches (text){
+  return cities.filter((e,i,a)=>{
+    a.city.includes(text)|| a.state.includes(text)
+  })
+}
+let filtered = findMatches('New')
+console.log(filtered)
+  
 </script>
 </body>
 </html>
