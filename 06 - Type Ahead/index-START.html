@@ -17,24 +17,23 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-const cities = [];
+const cities = [] ;
+const search =document.querySelector(".search")
 fetch(endpoint)
   .then(blob => blob.json())
-  .then(data => cities.push(...data));
-
-  function test(){
-    console.log("etst")
-  }
-setTimeout(test,3000)
-
-function findMatches (text){
-  return cities.filter((e,i,a)=>{
-    a.city.includes(text)|| a.state.includes(text)
-  })
-}
-let filtered = findMatches('New')
-console.log(filtered)
+  .then(data => cities.push(...data))
   
+  function findMatches (text){
+    const filtered= cities.filter((element)=>element.city.toLowerCase().includes(text)||element.state.toLowerCase().includes(text))
+    let list=""
+    filtered.forEach(filter => {
+      list+=`<li>${filter.city}, ${filter.state} <span class="population">${filter.population}</span></li>`
+    })
+    document.querySelector(".suggestions").innerHTML=""
+    document.querySelector(".suggestions").innerHTML =list
+}
+ search.addEventListener("change",()=>findMatches(search.value))
+ search.addEventListener("keyup",()=>findMatches(search.value))
 </script>
 </body>
 </html>
